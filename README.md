@@ -1,41 +1,116 @@
-# Interactive Data Explorer
+# Product Explorer App
 
-A full-stack web application for browsing, filtering, and viewing product details from the DummyJSON API.
+A modern, full-stack web application that provides an intuitive interface for exploring and managing product data through the DummyJSON API. View the live demo at [Product Explorer](https://product-explorer-app-2yx1.vercel.app/).
 
-## Features
+## ✨ Key Features
 
-- **Product Grid**: Responsive grid layout displaying product cards with images, titles, and prices
-- **Product Details**: Modal view with comprehensive product information
-- **Filtering**: Filter products by category
-- **Sorting**: Sort products by price (ascending/descending) and title (A-Z/Z-A)
-- **Animations**: GSAP animations for card appearances, hover effects, and modal transitions
-- **Caching**: Backend proxy with in-memory caching to reduce API calls
-- **Responsive Design**: Fully responsive layout for mobile, tablet, and desktop
+- **Interactive Product Grid**
+  - Responsive masonry layout
+  - Smooth loading animations
+  - Hover effects with GSAP
+  - Product cards with image previews
 
-## Tech Stack
+- **Advanced Filtering & Sorting**
+  - Category-based filtering
+  - Multi-parameter sorting
+  - Price range filtering
+  - Real-time search functionality
+
+- **Performance Optimizations**
+  - Server-side caching
+  - Lazy loading images
+  - Optimized API requests
+  - Client-side data persistence
+
+- **Responsive Design**
+  - Mobile-first approach
+  - Tablet & desktop layouts
+  - Accessible interface
+  - Touch-friendly interactions
+
+## 🛠️ Tech Stack
 
 ### Frontend
 - Next.js 14 (App Router)
 - TypeScript
 - Tailwind CSS
-- GSAP (animations)
-- Axios (HTTP client)
+- GSAP Animations
+- Axios
 
 ### Backend
 - Node.js
 - Express.js
-- Node Cache (caching)
-- CORS
+- Node Cache
+- CORS middleware
 
-## Setup Instructions
+## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js (v18 or higher)
-- npm or yarn
 
-### Installation
+- Node.js (v18.0.0 or higher)
+- npm or yarn package manager
+- Git
 
-1. Clone the repository
-2. Install dependencies for both frontend and backend:
+### Installation Steps
+
+1. Clone the repository:
    ```bash
-   npm run install:all
+   git clone https://github.com/nitingoley/product-explorer-app.git
+   cd product-explorer-app
+   ```
+
+2. Install dependencies:
+   ```bash
+   # Install frontend dependencies
+   cd frontend
+   npm install
+
+   # Install backend dependencies
+   cd ../backend
+   npm install
+   ```
+
+3. Configure environment variables:
+   ```bash
+   # Frontend (.env.local)
+   NEXT_PUBLIC_API_URL=http://localhost:5000
+
+   # Backend (.env)
+   PORT=5000
+   ALLOWED_ORIGINS=http://localhost:3000
+   ```
+
+4. Start the development servers:
+   ```bash
+   # Start backend server
+   cd backend
+   npm run dev
+
+   # Start frontend server (new terminal)
+   cd frontend
+   npm run dev
+   ```
+
+5. Access the application:
+   - Frontend: http://localhost:3000
+   - Backend API: http://localhost:5000
+
+## 📝 Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Create production build
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run test` - Run test suite
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
