@@ -52,56 +52,37 @@ export default function Home() {
     }
   }, [page, selectedCategory]);
 
-  // const fetchCategories = useCallback(async () => {
-    // try {
-    //   const response = await fetch('/api/categories');
+  const fetchCategories = useCallback(async () => {
+    try {
+      const response = await fetch('/api/categories');
       
-    //   if (!response.ok) {
-    //     throw new Error('Failed to fetch categories');
-    //   }
+      if (!response.ok) {
+        throw new Error('Failed to fetch categories');
+      }
       
-    //   const data = await response.json();
+      const data = await response.json();
       
-    //   // Make sure we're getting an array of strings
-    //   if (Array.isArray(data)) {
-    //     // Filter out any non-string values just in case
-    //     const validCategories = data.filter(item => typeof item === 'string');
-    //     setCategories(validCategories);
+      // Make sure we're getting an array of strings
+      if (Array.isArray(data)) {
+        // Filter out any non-string values just in case
+        const validCategories = data.filter(item => typeof item === 'string');
+        setCategories(validCategories);
         
-    //     if (validCategories.length === 0) {
-    //       console.warn('No valid categories found in API response');
-    //     }
-    //   } else {
-    //     console.error('Unexpected categories format:', data);
-    //     setCategories([]);
-    //   }
-    // } catch (err) {
-    //   console.error('Failed to fetch categories:', err);
-    //   setCategories([]);
-    // }
-  // }, []);
-
-
-
-  const fetchCategories = async () => {
-  try {
-    const response = await fetch('/api/categories');
-    
-    if (!response.ok) {
-      throw new Error('Failed to fetch categories');
-    }
-    
-    const data = await response.json();
-    
-    // Make sure we're getting an array of strings
-    if (Array.isArray(data)) {
-      // Filter out any non-string values just in case
-      const validCategories = data.filter(item => typeof item === 'string');
-      setCategories(validCategories);
-      
-      if (validCategories.length === 0) {
-        console.warn('No valid categories found in API response, using fallback');
-        // Fallback categories if API returns empty array
+        if (validCategories.length === 0) {
+          console.warn('No valid categories found in API response, using fallback');
+          // Fallback categories if API returns empty array
+          setCategories([
+            "smartphones", "laptops", "fragrances", "skincare", 
+            "groceries", "home-decoration", "furniture", "tops", 
+            "womens-dresses", "womens-shoes", "mens-shirts", 
+            "mens-shoes", "mens-watches", "womens-watches", 
+            "womens-bags", "womens-jewellery", "sunglasses", 
+            "automotive", "motorcycle", "lighting"
+          ]);
+        }
+      } else {
+        console.error('Unexpected categories format:', data);
+        // Fallback categories
         setCategories([
           "smartphones", "laptops", "fragrances", "skincare", 
           "groceries", "home-decoration", "furniture", "tops", 
@@ -111,8 +92,8 @@ export default function Home() {
           "automotive", "motorcycle", "lighting"
         ]);
       }
-    } else {
-      console.error('Unexpected categories format:', data);
+    } catch (err) {
+      console.error('Failed to fetch categories:', err);
       // Fallback categories
       setCategories([
         "smartphones", "laptops", "fragrances", "skincare", 
@@ -123,19 +104,7 @@ export default function Home() {
         "automotive", "motorcycle", "lighting"
       ]);
     }
-  } catch (err) {
-    console.error('Failed to fetch categories:', err);
-    // Fallback categories
-    setCategories([
-      "smartphones", "laptops", "fragrances", "skincare", 
-      "groceries", "home-decoration", "furniture", "tops", 
-      "womens-dresses", "womens-shoes", "mens-shirts", 
-      "mens-shoes", "mens-watches", "womens-watches", 
-      "womens-bags", "womens-jewellery", "sunglasses", 
-      "automotive", "motorcycle", "lighting"
-    ]);
-  }
-};
+  }, []);
 
   const filterAndSortProducts = useCallback(() => {
     const filtered = [...products];
