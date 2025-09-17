@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { Product } from '@/types';
 import ProductModal from './ProductModal';
 import { gsap } from 'gsap';
@@ -39,11 +40,13 @@ export default function ProductCard({ product }: ProductCardProps) {
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <div className="h-48 overflow-hidden">
-          <img
+        <div className="h-48 overflow-hidden relative">
+          <Image
             src={product.thumbnail}
             alt={product.title}
-            className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+            fill
+            className="object-cover transition-transform duration-300 hover:scale-105"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
           />
         </div>
         <div className="p-4">

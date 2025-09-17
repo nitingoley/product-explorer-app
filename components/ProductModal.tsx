@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState, useCallback } from 'react';
+import Image from 'next/image';
 import { Product } from '@/types';
 import { gsap } from 'gsap';
 
@@ -93,11 +94,13 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="relative">
-              <div className="h-64 md:h-80 overflow-hidden rounded-lg mb-4">
-                <img
+              <div className="h-64 md:h-80 overflow-hidden rounded-lg mb-4 relative">
+                <Image
                   src={product.images[currentImage]}
                   alt={product.title}
-                  className="w-full h-full object-cover"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
               
@@ -105,13 +108,13 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
                 <>
                   <button
                     onClick={prevImage}
-                    className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full"
+                    className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-10"
                   >
                     &lt;
                   </button>
                   <button
                     onClick={nextImage}
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full"
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full z-10"
                   >
                     &gt;
                   </button>
