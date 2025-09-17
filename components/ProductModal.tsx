@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useEffect, useRef, useState } from "react";
-import { Product } from "@/types";
-import { gsap } from "gsap";
+import { useEffect, useRef, useState, useCallback } from 'react';
+import { Product } from '@/types';
+import { gsap } from 'gsap';
 
 interface ProductModalProps {
   product: Product;
@@ -14,60 +14,57 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
   const backdropRef = useRef<HTMLDivElement>(null);
   const [currentImage, setCurrentImage] = useState(0);
 
-  useEffect(() => {
-    gsap.fromTo(
-      backdropRef.current,
-      { opacity: 0 },
-      { opacity: 1, duration: 0.3 }
-    );
-
-    gsap.fromTo(
-      modalRef.current,
-      { y: -50, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.3, ease: "power2.out" }
-    );
-
-    // close on escape key
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        onClose();
-      }
-    };
-    document.addEventListener("keydown", handleEscape);
-
-    // Prevent body scroll
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.removeEventListener("keydown", handleEscape);
-      document.body.style.overflow = "unset";
-    };
-  }, []);
-
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     // Animation on close
     gsap.to(modalRef.current, {
       opacity: 0,
       y: 50,
+      scale: 0.9,
       duration: 0.3,
-      scale: 0.95,
-      onComplete: onClose,
+      onComplete: onClose
     });
-
+    
     gsap.to(backdropRef.current, {
       opacity: 0,
-      duration: 0.3,
+      duration: 0.3
     });
-  };
+  }, [onClose]);
+
+  useEffect(() => {
+    // Animation on open
+    gsap.fromTo(backdropRef.current, 
+      { opacity: 0 },
+      { opacity: 1, duration: 0.3 }
+    );
+    
+    gsap.fromTo(modalRef.current, 
+      { opacity: 0, y: 50, scale: 0.9 },
+      { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: "back.out(1.7)" }
+    );
+
+    // Close on escape key
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') handleClose();
+    };
+    document.addEventListener('keydown', handleEscape);
+    
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+    
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'unset';
+    };
+  }, [handleClose]);
 
   const nextImage = () => {
-    setCurrentImage((prev) =>
+    setCurrentImage(prev => 
       prev === product.images.length - 1 ? 0 : prev + 1
     );
   };
 
   const prevImage = () => {
-    setCurrentImage((prev) =>
+    setCurrentImage(prev => 
       prev === 0 ? product.images.length - 1 : prev - 1
     );
   };
@@ -75,7 +72,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
   return (
     <div
       ref={backdropRef}
-      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
       onClick={handleClose}
     >
       <div
@@ -84,8 +81,8 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
         onClick={(e) => e.stopPropagation()}
       >
         <div className="p-6">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-2xl font-bold">{product.title}</h2> 
+          <div className="flex justify-between items-start mb-6">
+            <h2 className="text-2xl font-bold">{product.title}</h2>
             <button
               onClick={handleClose}
               className="text-gray-500 hover:text-gray-700 text-2xl"
@@ -96,14 +93,15 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="relative">
+              <div className="h-64 md:h-80 overflow-hidden rounded-lg mb-4">
                 <img
                   src={product.images[currentImage]}
                   alt={product.title}
                   className="w-full h-full object-cover"
                 />
-            </div> 
-
-             {product.images.length > 1 && (
+              </div>
+              
+              {product.images.length > 1 && (
                 <>
                   <button
                     onClick={prevImage}
@@ -131,8 +129,9 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
                   </div>
                 </>
               )}
-          </div>
-           <div>
+            </div>
+
+            <div>
               <p className="text-gray-700 mb-4">{product.description}</p>
               
               <div className="grid grid-cols-2 gap-4 mb-6">
@@ -173,7 +172,8 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
                 Add to Cart
               </button>
             </div>
-        </div> 
+          </div>
+        </div>
       </div>
     </div>
   );

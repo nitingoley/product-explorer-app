@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Product } from "@/types";
-import ProductModal from "./ProductModal";
-import { gsap } from "gsap";
+import { useState } from 'react';
+import { Product } from '@/types';
+import ProductModal from './ProductModal';
+import { gsap } from 'gsap';
 
 interface ProductCardProps {
   product: Product;
@@ -11,27 +11,22 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseEnter = () => {
-    setIsHovered(true);
     gsap.to(`#card-${product.id}`, {
       y: -5,
       duration: 0.3,
-      boxShadow:
-        "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)",
-      ease: "power2.out",
+      boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
+      ease: "power2.out"
     });
   };
 
   const handleMouseLeave = () => {
-    setIsHovered(false);
     gsap.to(`#card-${product.id}`, {
       y: 0,
       duration: 0.3,
-      boxShadow:
-        "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)",
-      ease: "power2.out",
+      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)',
+      ease: "power2.out"
     });
   };
 
@@ -52,12 +47,8 @@ export default function ProductCard({ product }: ProductCardProps) {
           />
         </div>
         <div className="p-4">
-          <h3 className="font-semibold text-lg mb-2 line-clamp-1">
-            {product.title}
-          </h3>
-          <p className="text-gray-600 text-sm mb-2 line-clamp-2">
-            {product.description}
-          </p>
+          <h3 className="font-semibold text-lg mb-2 line-clamp-1">{product.title}</h3>
+          <p className="text-gray-600 text-sm mb-2 line-clamp-2">{product.description}</p>
           <div className="flex justify-between items-center">
             <span className="font-bold text-lg">${product.price}</span>
             <span className="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">
